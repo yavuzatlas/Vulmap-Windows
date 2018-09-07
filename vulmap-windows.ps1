@@ -1,4 +1,4 @@
-﻿function Invoke-Vulmap {
+function Invoke-Vulmap {
     <#
 .SYNOPSIS
 Local vulnerability scanner
@@ -46,6 +46,8 @@ PS> .\vulmap-windows -DownloadAllExploits
 Scans the computer and downloads all available exploits
 
 .LINK
+https://github.com/vulmon
+https://github.com/yavuzatlas/vulmap-windows
 https://vulmon.com
 #>
 
