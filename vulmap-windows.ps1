@@ -10,16 +10,13 @@ Gets installed software information from the local host and asks to vulmon.com i
 Conducts a vulnerability scanning. Default mode.
 
 .PARAMETER OnlyExploitableVulns
-Conducts a vulnerability scanning and only shows vulnerabilities that have exploits
+Conducts a vulnerability scanning and only shows vulnerabilities that have exploits.
 
 .PARAMETER DownloadExploit
-Downloads given exploit
+Downloads given exploit.
 
 .PARAMETER DownloadAllExploits
-Scans the computer and downloads all available exploits
-
-.PARAMETER DownloadExploit
-Downloads given exploit
+Scans the computer and downloads all available exploits.
 
 .EXAMPLE
 PS> Invoke-Vulmap
@@ -72,8 +69,35 @@ https://vulmon.com
         return (Invoke-WebRequest -Uri https://vulmon.com/scannerapi_vv211 -Method POST -Body $postParams).Content
     }
     function Get-ProductList() {
-        $var1 = Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion;
-        return $var1;
+        $registry_paths = ("HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall", "HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall") 
+   
+        $objectArray = @();
+    
+        foreach ($registry_path in $registry_paths) {
+            $subkeys = Get-ChildItem -Path $registry_path
+    
+            ForEach ($key in $subkeys) {
+                $DisplayName = $key.getValue('DisplayName');
+    
+                if (!([string]::IsNullOrEmpty($DisplayName))) {
+                    $DisplayVersion = $key.GetValue('DisplayVersion');
+    
+                    $Object = [pscustomobject]@{ 
+                        DisplayName     = $DisplayName.Trim();
+                        DisplayVersion  = $DisplayVersion;
+                        NameVersionPair = $DisplayName.Trim() + $DisplayVersion;
+                    }
+    
+                    $Object.pstypenames.insert(0, 'System.Software.Inventory')
+    
+                    $objectArray += $Object
+                }
+    
+            }
+    
+        }
+    
+        $objectArray | sort-object NameVersionPair -unique;  
     }   
     function Get-Exploit($ExploitID) {  
         $request1 = Invoke-WebRequest -Uri ('http://vulmon.com/downloadexploit?qid=' + $ExploitID) -UserAgent "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0";
