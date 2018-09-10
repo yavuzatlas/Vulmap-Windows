@@ -13,12 +13,12 @@ Compatible with PowerShell v3 and higher
 
 ## Usage
 
-Parameter              | Description
------------------------| -------------
--DefaultMode           | Conducts a vulnerability scanning. Default mode.
--OnlyExploitableVulns  | Conducts a vulnerability scanning and only shows vulnerabilities that have exploits.
--DownloadExploit       | Downloads given exploit.
--DownloadAllExploits   | Scans the computer and downloads all available exploits.
+Parameter                     | Description
+------------------------------| -------------
+-DefaultMode                  | Conducts a vulnerability scanning. Default mode.
+-OnlyExploitableVulns         | Conducts a vulnerability scanning and only shows vulnerabilities that have exploits.
+-DownloadExploit <exploit_id> | Downloads given exploit.
+-DownloadAllExploits          | Scans the computer and downloads all available exploits.
 
 
 ### Examples
