@@ -20,25 +20,21 @@ Scans the computer and downloads all available exploits.
 
 .EXAMPLE
 PS> Invoke-Vulmap
-PS> .\vulmap-windows
 
 Default mode. Conducts a vulnerability scanning.
 
 .EXAMPLE
 PS> Invoke-Vulmap -OnlyExploitableVulns
-PS> .\vulmap-windows -OnlyExploitableVulns
 
 Conducts a vulnerability scanning and only shows vulnerabilities that have exploits
 
 .EXAMPLE
 PS> Invoke-Vulmap -DownloadExploit EDB9386
-PS> .\vulmap-windows -DownloadExploit EDB9386
 
 Downloads given exploit
 
 .EXAMPLE
 PS> Invoke-Vulmap -DownloadAllExploits
-PS> .\vulmap-windows -DownloadAllExploits
 
 Scans the computer and downloads all available exploits
 
